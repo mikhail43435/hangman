@@ -18,12 +18,6 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    private final Output output;
-
-    public Main(Output output) {
-        this.output = output;
-    }
-
     public static void main(String[] args) throws Exception {
 
         Output output = new ConsoleOutput();
@@ -58,10 +52,10 @@ public class Main {
         actions.add(new GetHelpAction(output, instruction));
         actions.add(new ExitConsoleAction(output));
 
-        new Main(output).fire(input, actions);
+        new Main().fire(input, output, actions);
     }
 
-    public void fire(Input input, List<UserAction> actions) throws Exception {
+    public void fire(Input input, Output output, List<UserAction> actions) throws Exception {
 
         boolean run = true;
         List<String> actionsStrings = actions.stream().
