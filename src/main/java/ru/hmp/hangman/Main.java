@@ -4,8 +4,7 @@ import ru.hmp.hangman.actions.ExitConsoleAction;
 import ru.hmp.hangman.actions.GetHelpAction;
 import ru.hmp.hangman.actions.StartGameAction;
 import ru.hmp.hangman.actions.UserAction;
-import ru.hmp.hangman.exceptions.LoadDictionaryException;
-import ru.hmp.hangman.exceptions.LoadGraphicException;
+import ru.hmp.hangman.exceptions.ApplicationException;
 import ru.hmp.hangman.gameprocessor.GameProcessor;
 import ru.hmp.hangman.gameprocessor.GameProcessorBase;
 import ru.hmp.hangman.io.*;
@@ -34,9 +33,8 @@ public class Main {
             dictionary = resourceLoader.loadDictionary(numOfStages);
             graphics = resourceLoader.loadGraphics(numOfStages);
             instruction = resourceLoader.loadInstruction();
-
-        } catch (LoadDictionaryException | LoadGraphicException e) {
-            output.println("Error occurred while loading resources");
+        } catch (ApplicationException e) {
+            output.println("Error occurred while loading game resources");
             output.println(String.format("Error description: %s", e.getMessage()));
             if (e.getCause() != null && e.getCause().getMessage() != null) {
                 output.println(String.format("Error cause: %s", e.getCause().getMessage()));
