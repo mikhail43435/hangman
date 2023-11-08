@@ -1,6 +1,6 @@
 package ru.hmp.hangman.exceptions;
 
-public class LoadDictionaryException extends Exception {
+public class LoadDictionaryException extends ApplicationException {
 
     public LoadDictionaryException(String message) {
         super(message);
