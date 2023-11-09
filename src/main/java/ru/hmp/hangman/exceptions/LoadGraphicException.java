@@ -1,6 +1,6 @@
 package ru.hmp.hangman.exceptions;
 
-public class LoadGraphicException extends ApplicationException  {
+public class LoadGraphicException extends ApplicationException {
 
     public LoadGraphicException(String message) {
         super(message);

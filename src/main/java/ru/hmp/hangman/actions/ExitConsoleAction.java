@@ -17,7 +17,7 @@ public final class ExitConsoleAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input) throws Exception {
+    public boolean execute(Input input) {
         out.println("Game is closed");
         return false;
     }

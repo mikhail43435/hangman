@@ -34,7 +34,7 @@ public final class GameProcessorBase implements GameProcessor {
     }
 
     @Override
-    public void fireGame() {
+    public void startGame() {
 
         Set<Character> revealedLetters = new HashSet<>();
 

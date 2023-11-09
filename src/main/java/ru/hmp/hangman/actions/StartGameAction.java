@@ -21,7 +21,8 @@ public final class StartGameAction implements UserAction {
 
     @Override
     public boolean execute(Input input) {
-        gameProcessor.fireGame();
+        output.println("Starting the game...");
+        gameProcessor.startGame();
         return true;
     }
 }

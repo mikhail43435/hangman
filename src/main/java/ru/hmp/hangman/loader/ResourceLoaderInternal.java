@@ -20,7 +20,7 @@ public class ResourceLoaderInternal implements ResourceLoader {
         try {
             list = Files.readAllLines(Paths.get(getClass().getResource("/words_list.txt").toURI()));
         } catch (Exception e) {
-            throw new LoadDictionaryException("Internal error occurred while load dictionary", e);
+            throw new LoadDictionaryException("Internal error while load dictionary", e);
         }
 
         list = list.stream().
@@ -29,9 +29,8 @@ public class ResourceLoaderInternal implements ResourceLoader {
                 collect(Collectors.toList());
 
         if (list.isEmpty()) {
-            throw new LoadDictionaryException("Internal error occurred while load dictionary: dictionary is empty");
+            throw new LoadDictionaryException("Internal error while load dictionary: dictionary is empty");
         }
-
         return list;
     }
 
@@ -47,11 +46,11 @@ public class ResourceLoaderInternal implements ResourceLoader {
             list.add(Files.readString(Paths.get(getClass().getResource("/graphics/stage05.txt").toURI())));
             list.add(Files.readString(Paths.get(getClass().getResource("/graphics/stage06.txt").toURI())));
         } catch (Exception e) {
-            throw new LoadGraphicException("Internal error occurred while load graphics", e);
+            throw new LoadGraphicException("Internal error while load graphics", e);
         }
 
         if (list.size() != numOfStages + 1) {
-            throw new LoadGraphicException("Internal error occurred while load graphics:"
+            throw new LoadGraphicException("Internal error while load graphics:"
                     + " number of graphic files loaded do not match stage level");
         }
 

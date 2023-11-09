@@ -13,48 +13,51 @@ import ru.hmp.hangman.loader.ResourceLoaderInternal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
-
-        Output output = new ConsoleOutput();
-        Input input = new ValidateInput(output, new ConsoleInput());
-        ResourceLoader resourceLoader = new ResourceLoaderInternal();
-
-        int numOfStages = 6;
-
-        List<String> dictionary;
-        List<String> graphics;
-        String instruction;
-
-        try {
-            dictionary = resourceLoader.loadDictionary(numOfStages);
-            graphics = resourceLoader.loadGraphics(numOfStages);
-            instruction = resourceLoader.loadInstruction();
-        } catch (ApplicationException e) {
-            output.println("Error occurred while loading game resources");
-            output.println(String.format("Error description: %s", e.getMessage()));
-            if (e.getCause() != null && e.getCause().getMessage() != null) {
-                output.println(String.format("Error cause: %s", e.getCause().getMessage()));
-            }
-            output.println("Game terminated");
-            return;
-        }
-
-        GameProcessor gameProcessor = new GameProcessorBase(input, output, dictionary, graphics, numOfStages);
-
-        ArrayList<UserAction> actions = new ArrayList<>();
-        actions.add(new StartGameAction(output, gameProcessor));
-        actions.add(new GetHelpAction(output, instruction));
-        actions.add(new ExitConsoleAction(output));
-
-        new Main().fire(input, output, actions);
+    public static void main(String[] args) {
+        init();
     }
 
-    public void fire(Input input, Output output, List<UserAction> actions) throws Exception {
+    public static void init() {
+        try {
+            Output output = new ConsoleOutput();
+            Input input = new ValidateInput(output, new ConsoleInput());
+            ResourceLoader resourceLoader = new ResourceLoaderInternal();
 
+            int numOfStages = Integer.parseInt(ResourceBundle.getBundle("system").getString("numOfStages"));
+
+            List<String> dictionary = resourceLoader.loadDictionary(numOfStages);
+            List<String> graphics = resourceLoader.loadGraphics(numOfStages);
+            String instruction = resourceLoader.loadInstruction();
+
+            GameProcessor gameProcessor = new GameProcessorBase(input, output, dictionary, graphics, numOfStages);
+
+            ArrayList<UserAction> actions = new ArrayList<>();
+            actions.add(new StartGameAction(output, gameProcessor));
+            actions.add(new GetHelpAction(output, instruction));
+            actions.add(new ExitConsoleAction(output));
+
+            new Main().run(input, output, actions);
+
+        } catch (Exception e) {
+            if (e instanceof ApplicationException) {
+                System.out.println("Error occurred while loading game resources");
+            } else {
+                System.out.println("Error occurred while running application");
+            }
+            System.out.printf("Error description: %s%n", e.getMessage());
+            if (e.getCause() != null && e.getCause().getMessage() != null) {
+                System.out.printf("Error cause: %s%n", e.getCause().getMessage());
+            }
+            System.out.println("Game terminated");
+        }
+    }
+
+    public void run(Input input, Output output, List<UserAction> actions) {
         boolean run = true;
         List<String> actionsStrings = actions.stream().
                 map(UserAction::name).

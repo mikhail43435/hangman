@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public final class ConsoleInput implements Input {
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     @Override
     public String askStr(String question) {
