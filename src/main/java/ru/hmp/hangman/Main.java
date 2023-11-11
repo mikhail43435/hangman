@@ -28,7 +28,7 @@ public class Main {
             Input input = new ValidateInput(output, new ConsoleInput());
             ResourceLoader resourceLoader = new ResourceLoaderInternal();
 
-            int numOfStages = Integer.parseInt(ResourceBundle.getBundle("system").getString("numOfStages"));
+            int numOfStages = Integer.parseInt(ResourceBundle.getBundle("application").getString("numOfStages"));
 
             List<String> dictionary = resourceLoader.loadDictionary(numOfStages);
             List<String> graphics = resourceLoader.loadGraphics(numOfStages);
