@@ -38,22 +38,19 @@ public class ResourceLoaderInternal implements ResourceLoader {
     public List<String> loadGraphics(int numOfStages) throws LoadGraphicException {
         List<String> list = new ArrayList<>();
         try {
-            list.add(Files.readString(Paths.get(getClass().getResource("/graphics/stage00.txt").toURI())));
-            list.add(Files.readString(Paths.get(getClass().getResource("/graphics/stage01.txt").toURI())));
-            list.add(Files.readString(Paths.get(getClass().getResource("/graphics/stage02.txt").toURI())));
-            list.add(Files.readString(Paths.get(getClass().getResource("/graphics/stage03.txt").toURI())));
-            list.add(Files.readString(Paths.get(getClass().getResource("/graphics/stage04.txt").toURI())));
-            list.add(Files.readString(Paths.get(getClass().getResource("/graphics/stage05.txt").toURI())));
-            list.add(Files.readString(Paths.get(getClass().getResource("/graphics/stage06.txt").toURI())));
+
+            for (int i = 0; i <= numOfStages; i++) {
+                String name;
+                if (i < 10) {
+                    name = String.format("/graphics/stage0%d.txt", i);
+                } else {
+                    name = String.format("/graphics/stage%d.txt", i);
+                }
+                list.add(Files.readString(Paths.get(getClass().getResource(name).toURI())));
+            }
         } catch (Exception e) {
-            throw new LoadGraphicException("Internal error while load graphics", e);
+            throw new LoadGraphicException("Internal error while load graphics files", e);
         }
-
-        if (list.size() != numOfStages + 1) {
-            throw new LoadGraphicException("Internal error while load graphics:"
-                    + " number of graphic files loaded do not match stage level");
-        }
-
         return list;
     }
 
