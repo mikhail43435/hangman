@@ -29,12 +29,18 @@ public class Main {
             ResourceLoader resourceLoader = new ResourceLoaderInternal();
 
             int numOfStages = Integer.parseInt(ResourceBundle.getBundle("application").getString("numOfStages"));
+            String maskString = ResourceBundle.getBundle("application").getString("maskString");
 
             List<String> dictionary = resourceLoader.loadDictionary(numOfStages);
             List<String> graphics = resourceLoader.loadGraphics(numOfStages);
             String instruction = resourceLoader.loadInstruction();
 
-            GameProcessor gameProcessor = new GameProcessorBase(input, output, dictionary, graphics, numOfStages);
+            GameProcessor gameProcessor = new GameProcessorBase(input,
+                    output,
+                    dictionary,
+                    graphics,
+                    numOfStages,
+                    maskString);
 
             ArrayList<UserAction> actions = new ArrayList<>();
             actions.add(new StartGameAction(output, gameProcessor));

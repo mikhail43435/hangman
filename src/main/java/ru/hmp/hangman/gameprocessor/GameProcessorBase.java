@@ -11,26 +11,27 @@ import java.util.Set;
 
 public final class GameProcessorBase implements GameProcessor {
 
-    private static final char MASK_CHAR = '*';
-
     private final Input input;
     private final Output output;
     private final List<String> dictionary;
     private final List<String> graphics;
     private final Random random;
     private final int stagesNum;
+    private final String maskString;
 
     public GameProcessorBase(Input input,
                              Output output,
                              List<String> dictionary,
                              List<String> graphics,
-                             int stagesNum) {
+                             int stagesNum,
+                             String maskString) {
         this.input = input;
         this.output = output;
         this.dictionary = dictionary;
         this.graphics = graphics;
         this.random = new Random();
         this.stagesNum = stagesNum;
+        this.maskString = maskString;
     }
 
     @Override
@@ -87,7 +88,7 @@ public final class GameProcessorBase implements GameProcessor {
     }
 
     private boolean checkWordIsFullyRevealed(String word) {
-        return word.indexOf(MASK_CHAR) < 0;
+        return !word.contains(maskString);
     }
 
     private String createWordToShow(String word, Set<Character> revealedLetters) {
@@ -96,7 +97,7 @@ public final class GameProcessorBase implements GameProcessor {
             if (revealedLetters.contains(ch)) {
                 sb.append(ch);
             } else {
-                sb.append(MASK_CHAR);
+                sb.append(maskString);
             }
         }
         return sb.toString();
