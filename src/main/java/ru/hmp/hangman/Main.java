@@ -22,7 +22,7 @@ public class Main {
         init();
     }
 
-    public static void init() {
+    private static void init() {
         try {
             Output output = new ConsoleOutput();
             Input input = new ValidateInput(output, new ConsoleInput());
@@ -57,7 +57,7 @@ public class Main {
         }
     }
 
-    public void run(Input input, Output output, List<UserAction> actions) {
+    private void run(Input input, Output output, List<UserAction> actions) {
         boolean run = true;
         List<String> actionsStrings = actions.stream().
                 map(UserAction::name).
